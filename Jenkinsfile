@@ -3,8 +3,8 @@ pipeline {
 
     environment {
         DIRECTORY_PATH = '.'
-        TESTING_ENVIRONMENT = 'test-env'
-        PRODUCTION_ENVIRONMENT = 'your_name_prod_env'
+        TESTING_ENVIRONMENT = 'testjenkin'
+        PRODUCTION_ENVIRONMENT = 'testproduct'
     }
 
     stages {
