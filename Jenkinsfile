@@ -30,16 +30,14 @@ pipeline {
             }
             post {
                 success {
-                    emailext to: 'disuru.office@gmail.com',
-                             subject: "Testing Stage Completed Successfully",
-                             body: "Unit and integration tests passed.",
-                             attachLog: true
+                    mail to: 'disuru.office@gmail.com',
+                         subject: "Testing Stage Completed Successfully",
+                         body: "Unit and integration tests passed."
                 }
                 failure {
-                    emailext to: 'disuru.office@gmail.com',
-                             subject: "Testing Stage Failed",
-                             body: "Some tests failed. Check the logs.",
-                             attachLog: true
+                    mail to: 'disuru.office@gmail.com',
+                         subject: "Testing Stage Failed",
+                         body: "Some tests failed. Check the logs."
                 }
             }
         }
@@ -56,16 +54,14 @@ pipeline {
             }
             post {
                 success {
-                    emailext to: 'disuru.office@gmail.com',
-                             subject: "Security Scan Completed Successfully",
-                             body: "No vulnerabilities found.",
-                             attachLog: true
+                    mail to: 'disuru.office@gmail.com',
+                         subject: "Security Scan Completed Successfully",
+                         body: "No vulnerabilities found."
                 }
                 failure {
-                    emailext to: 'disuru.office@gmail.com',
-                             subject: "Security Scan Failed",
-                             body: "Vulnerabilities detected. Check the logs.",
-                             attachLog: true
+                    mail to: 'disuru.office@gmail.com',
+                         subject: "Security Scan Failed",
+                         body: "Vulnerabilities detected. Check the logs."
                 }
             }
         }
@@ -99,16 +95,14 @@ pipeline {
             echo 'This will always run at the end of the pipeline.'
         }
         success {
-            emailext to: 'disuru.office@gmail.com',
-                     subject: "Pipeline Completed Successfully",
-                     body: "All stages completed successfully. Logs are attached.",
-                     attachLog: true
+            mail to: 'disuru.office@gmail.com',
+                 subject: "Pipeline Completed Successfully",
+                 body: "All stages completed successfully. Logs are attached."
         }
         failure {
-            emailext to: 'disuru.office@gmail.com',
-                     subject: "Pipeline Failed",
-                     body: "The pipeline failed. Please check the logs.",
-                     attachLog: true
+            mail to: 'disuru.office@gmail.com',
+                 subject: "Pipeline Failed",
+                 body: "The pipeline failed. Please check the logs."
         }
     }
 }
