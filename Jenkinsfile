@@ -65,7 +65,7 @@ pipeline {
                 }
             }
         }
-        stage('Deploy to Staging') {
+        stage('Deploy') {
             steps {
                 echo "Deploying the application to the staging environment: ${env.TESTING_ENVIRONMENT}"
                 // Example: sh './deploy-to-staging.sh'
