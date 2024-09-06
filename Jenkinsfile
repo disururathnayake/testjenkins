@@ -13,23 +13,31 @@ pipeline {
                 echo "Using Maven to build the code"
                 // Example: sh 'mvn clean package'
             }
+            post {
+                success {
+                    echo "Build successful."
+                }
+                failure {
+                    echo "Build failed."
+                }
+            }
         }
         stage('Test') {
             steps {
                 echo 'Using JUnit for unit testing'
                 echo 'Using Selenium for integration testing'
                 // Example: sh 'mvn test'
-                post {
-                    success {
-                        mail to: 'disuru.office@gmail.com',
-                             subject: "Testing Stage Completed Successfully",
-                             body: "Unit and integration tests passed."
-                    }
-                    failure {
-                        mail to: 'disuru.office@gmail.com',
-                             subject: "Testing Stage Failed",
-                             body: "Some tests failed. Check the logs."
-                    }
+            }
+            post {
+                success {
+                    mail to: 'disuru.office@gmail.com',
+                         subject: "Testing Stage Completed Successfully",
+                         body: "Unit and integration tests passed."
+                }
+                failure {
+                    mail to: 'disuru.office@gmail.com',
+                         subject: "Testing Stage Failed",
+                         body: "Some tests failed. Check the logs."
                 }
             }
         }
@@ -43,17 +51,17 @@ pipeline {
             steps {
                 echo 'Using OWASP ZAP for security scanning'
                 // Example: sh './security-scan.sh'
-                post {
-                    success {
-                        mail to: 'disuru.office@gmail.com',
-                             subject: "Security Scan Completed Successfully",
-                             body: "No vulnerabilities found."
-                    }
-                    failure {
-                        mail to: 'disuru.office@gmail.com',
-                             subject: "Security Scan Failed",
-                             body: "Vulnerabilities detected. Check the logs."
-                    }
+            }
+            post {
+                success {
+                    mail to: 'disuru.office@gmail.com',
+                         subject: "Security Scan Completed Successfully",
+                         body: "No vulnerabilities found."
+                }
+                failure {
+                    mail to: 'disuru.office@gmail.com',
+                         subject: "Security Scan Failed",
+                         body: "Vulnerabilities detected. Check the logs."
                 }
             }
         }
@@ -83,6 +91,9 @@ pipeline {
     }
 
     post {
+        always {
+            echo 'This will always run at the end of the pipeline.'
+        }
         success {
             mail to: 'disuru.office@gmail.com',
                  subject: "Pipeline Completed Successfully",
