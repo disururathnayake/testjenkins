@@ -77,11 +77,6 @@ pipeline {
                 // Example: sh 'mvn verify'
             }
         }
-        stage('Approval') {
-            steps {
-                input message: 'Do you want to proceed with deployment to production?', ok: 'Deploy to Production'
-            }
-        }
         stage('Deploy to Production') {
             steps {
                 echo "Deploying the code to the production environment: ${env.PRODUCTION_ENVIRONMENT}"
