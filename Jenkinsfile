@@ -10,28 +10,63 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo "Fetch the source code from the directory path: ${env.DIRECTORY_PATH}"
-                echo "Compile the code and generate any necessary artifacts"
-                // Example: sh 'mvn clean package' or bat 'gradlew build'
+                echo "Using Maven to build the code"
+                // Example: sh 'mvn clean package'
             }
         }
         stage('Test') {
             steps {
-                echo 'Running unit tests'
-                echo 'Running integration tests'
-                // Example: sh 'mvn test' or bat 'gradlew test'
+                echo 'Using JUnit for unit testing'
+                echo 'Using Selenium for integration testing'
+                // Example: sh 'mvn test'
+                post {
+                    success {
+                        mail to: 'disuru.office@gmail.com',
+                             subject: "Testing Stage Completed Successfully",
+                             body: "Unit and integration tests passed."
+                    }
+                    failure {
+                        mail to: 'disuru.office@gmail.com',
+                             subject: "Testing Stage Failed",
+                             body: "Some tests failed. Check the logs."
+                    }
+                }
             }
         }
         stage('Code Quality Check') {
             steps {
-                echo 'Checking the quality of the code'
-                // Example: sh 'sonar-scanner' or any code quality tool command
+                echo 'Using SonarQube for code quality analysis'
+                // Example: sh 'sonar-scanner'
             }
         }
-        stage('Deploy') {
+        stage('Security Scan') {
             steps {
-                echo "Deploying the application to the testing environment: ${env.TESTING_ENVIRONMENT}"
-                // Example: sh './deploy-to-test-env.sh' or bat 'deploy-to-test-env.bat'
+                echo 'Using OWASP ZAP for security scanning'
+                // Example: sh './security-scan.sh'
+                post {
+                    success {
+                        mail to: 'disuru.office@gmail.com',
+                             subject: "Security Scan Completed Successfully",
+                             body: "No vulnerabilities found."
+                    }
+                    failure {
+                        mail to: 'disuru.office@gmail.com',
+                             subject: "Security Scan Failed",
+                             body: "Vulnerabilities detected. Check the logs."
+                    }
+                }
+            }
+        }
+        stage('Deploy to Staging') {
+            steps {
+                echo "Deploying the application to the staging environment: ${env.TESTING_ENVIRONMENT}"
+                // Example: sh './deploy-to-staging.sh'
+            }
+        }
+        stage('Integration Tests on Staging') {
+            steps {
+                echo 'Running integration tests on staging'
+                // Example: sh 'mvn verify'
             }
         }
         stage('Approval') {
@@ -42,7 +77,7 @@ pipeline {
         stage('Deploy to Production') {
             steps {
                 echo "Deploying the code to the production environment: ${env.PRODUCTION_ENVIRONMENT}"
-                // Example: sh './deploy-to-production.sh' or bat 'deploy-to-production.bat'
+                // Example: sh './deploy-to-production.sh'
             }
         }
     }
